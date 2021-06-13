@@ -1,5 +1,5 @@
-# multi-board
-
+# Multi-board
+## Vue based White borad app supports sharing between users in realtime 
 ## Project setup
 ```
 npm install
