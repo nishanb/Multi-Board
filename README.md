@@ -1,4 +1,4 @@
-# Multi-board
+# [WIP] Multi-Board
 ## Vue based White borad app supports sharing between users in realtime 
 ## Project setup
 ```
