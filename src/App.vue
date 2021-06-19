@@ -1,16 +1,16 @@
 <template>
   <div>
-    <WhiteBoard />
+    <CanvaBoard />
   </div>
 </template>
 
 <script>
-import WhiteBoard from "./components/WhiteBoard.vue";
-
+//import WhiteBoard from "./components/WhiteBoard.vue";
+import CanvaBoard from "./components/CanvaBoard.vue";
 export default {
   name: "App",
   components: {
-    WhiteBoard,
+    CanvaBoard,
   },
 };
 </script>
