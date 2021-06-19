@@ -56,6 +56,7 @@ export default createStore({
     addPath({ state,commit },path){
       commit('ADD_HISTORY',path)
       if(!path["secondary"]){
+        delete path["secondary"]
         state.webSoc.emit('addPoint',path)
       }
     },

@@ -15,18 +15,16 @@ const io = require('socket.io')(http, {
     cors: { origin: "*" }
 });
 
-//Test
-io.on('connection', (socket) => {
-    console.log('a user connected');
+//Listen on ws 
+io.on('connection', (socket) => {    
+    console.log('A user joined...');
 
+    //new point is added
     socket.on('addPoint', (message) =>     {
         console.log(message);
+        message['sender'] = socket.id
         socket.broadcast.emit('addPoint', message );   
     });
-
-    socket.on('disconnect', function () {
-        console.log('A user disconnected');
-     });
 });
 
 //Set environment variables
