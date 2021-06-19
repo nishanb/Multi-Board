@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
+    webSoc : null,
     isDrawing: false,
     x: null,
     y: null,
@@ -31,6 +32,9 @@ export default createStore({
     },
     ADD_HISTORY(state,path){
       state.history.push(path)
+    },
+    SET_SOCKET(state,socket){
+      state.webSoc = socket
     }
   },
   actions: {
@@ -49,11 +53,17 @@ export default createStore({
     setStorkeSize({ commit },storkeSize){
       commit('SET_STROKE_SIZE',storkeSize)
     },
-    addPath({ commit },path){
+    addPath({ state,commit },path){
       commit('ADD_HISTORY',path)
+      if(!path["secondary"]){
+        state.webSoc.emit('addPoint',path)
+      }
     },
     setWhiteBoard({ commit },canvas){
       commit('SET_CANVAS',canvas)
+    },
+    setSocketConnection({ commit },socket){
+      commit('SET_SOCKET',socket)
     }
   },
   modules: {
