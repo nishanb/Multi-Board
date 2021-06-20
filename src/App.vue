@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <CanvaBoard />
+  <div class="main">
+    <CanvaBoard class="main" />
   </div>
 </template>
 
@@ -18,3 +18,12 @@ export default {
   },
 };
 </script>
+<style>
+.main {
+  padding: 0px !important;
+  margin: 0px !important;
+  /* width: 100vw;
+  height: 100vh;
+  background: blueviolet; */
+}
+</style>

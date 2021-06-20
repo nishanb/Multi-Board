@@ -2,12 +2,12 @@
   <div>
     <canvas
       ref="board"
-      width="800"
-      height="600"
       @mousemove="draw"
       @mousedown="startDraw"
       @mouseup="endDraw"
       @mouseleave="endDraw"
+      height="800"
+      width="800"
     >
     </canvas>
     <button @click="clear">clear</button>
@@ -80,7 +80,7 @@ export default {
     cHelper.setBackground(this.canvas);
 
     //setup websocket client
-    this.setSocketConnection(SocketIO("http://localhost:8080"));
+    this.setSocketConnection(SocketIO("http://192.168.0.167:8080"));
 
     //listen to add point from othetr clients
     this.webSoc.on("addPoint", (point) => {
@@ -93,7 +93,7 @@ export default {
 
 <style scoped>
 canvas {
-  background: #ffff;
-  margin: 10px;
+  border: 1px solid rgb(9, 9, 14);
+  display: block;
 }
 </style>

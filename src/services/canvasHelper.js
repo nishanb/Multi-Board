@@ -2,8 +2,8 @@ module.exports = {
     setBackground : (canvas)  => {
         var gridSize = 20;
         canvas.fillStyle = "rgba(49, 179, 220)";
-        for (var i = 0; i * gridSize < 800; i++) {
-          for (var j = 0; j * gridSize < 600; j++) {
+        for (var i = 0; i * gridSize < 10000; i++) {
+          for (var j = 0; j * gridSize < 10000; j++) {
             if (i > 0 && j > 0) {
               canvas.beginPath();
               canvas.rect(i * gridSize, j * gridSize, 2, 2);

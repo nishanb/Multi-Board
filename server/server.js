@@ -12,7 +12,7 @@ const http = require('http').Server(app);
 
 //init websocket
 const io = require('socket.io')(http, {
-    cors: { origin: "*" }
+    cors: { origin: "*" },
 });
 
 //Listen on ws 
