@@ -14,7 +14,7 @@ module.exports = {
         }
     },
     clearBackground : (canvas) => {
-        canvas.clearRect(0, 0, 800, 800);
+        canvas.clearRect(0, 0, canvas.canvas.clientHeight,canvas.canvas.clientWidth);
     },
     createLine: (ctx) =>  {
         if(ctx.secondary){

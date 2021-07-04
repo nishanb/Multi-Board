@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <canvas
       ref="board"
       @mousemove="draw"
@@ -8,6 +8,31 @@
       @mouseleave="endDraw"
     >
     </canvas>
+    <div class="control-pad p-shadow-24">
+      <Button
+        icon="pi pi-trash"
+        class="flex-item p-button-raised p-button-rounded p-button-lg"
+        @click="clear()"
+        :loading="false"
+      />
+      <Button
+        icon="pi pi-download"
+        class="flex-item p-button-raised p-button-rounded p-button-lg"
+      />
+
+      <Button
+        icon="pi pi-pencil"
+        class="flex-item p-button-raised p-button-rounded p-button-lg"
+      />
+      <Button
+        icon="pi pi-share-alt"
+        class="flex-item p-button-raised p-button-rounded p-button-lg"
+      />
+      <Button
+        icon="pi pi-github"
+        class="flex-item p-button-raised p-button-rounded p-button-lg"
+      />
+    </div>
   </div>
 </template>
 
@@ -15,8 +40,12 @@
 import { mapState, mapActions } from "vuex";
 import SocketIO from "socket.io-client";
 import * as cHelper from "../services/canvasHelper";
+import Button from "primevue/button";
 
 export default {
+  components: {
+    Button,
+  },
   computed: {
     ...mapState([
       "canvas",
@@ -85,15 +114,19 @@ export default {
     },
   },
   mounted() {
+    //locate canvas
     this.setWhiteBoard(this.$refs["board"].getContext("2d"));
 
     //drawbackground
     this.drawBackground();
-
+  },
+  created() {
     //setup websocket client
     this.setSocketConnection(SocketIO("http://192.168.0.167:8080"));
 
-    //listen to add point from othetr clients
+    //websocket events
+
+    //add points : other users
     this.webSoc.on("addPoint", (point) => {
       this.drawLine({
         ...point,
@@ -102,9 +135,8 @@ export default {
         currentHeight: this.$windowHeight,
       });
     });
-  },
-  created() {
-    //add eventlistener to manager resize events
+
+    //add eventlistener to manage window resize events
     window.addEventListener("resize", () => {
       try {
         this.drawBackground();
@@ -117,4 +149,23 @@ export default {
 </script>
 
 <style scoped>
+.control-pad {
+  min-height: 70px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: rgb(49, 49, 49);
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.flex-item {
+  margin-left: 15px !important;
+  scale: 2rem;
+}
+.container {
+  position: relative;
+}
 </style>
