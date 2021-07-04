@@ -17,6 +17,12 @@ module.exports = {
         canvas.clearRect(0, 0, 800, 800);
     },
     createLine: (ctx) =>  {
+        if(ctx.secondary){
+          ctx.x1 *= (ctx.currentWidth/ctx.width)
+          ctx.x2 *= (ctx.currentWidth/ctx.width)
+          ctx.y2 *= (ctx.currentHeight/ctx.height)
+          ctx.y1 *= (ctx.currentHeight/ctx.height)
+        }
         ctx.canvas.beginPath();
         ctx.canvas.strokeStyle = ctx.brushColor;
         ctx.canvas.lineWidth = ctx.storkeSize;

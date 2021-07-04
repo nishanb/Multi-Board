@@ -33,8 +33,14 @@ export default {
       //draw line in canvas
       cHelper.createLine({ ...point, canvas: this.canvas });
 
-      //send new points to ws
-      this.addPath({ ...point });
+      if (!point.secondary) {
+        //send new points to ws
+        this.addPath({
+          ...point,
+          width: this.$windowWidth,
+          height: this.$windowHeight,
+        });
+      }
     },
     draw(e) {
       if (this.isDrawing) {
@@ -81,6 +87,7 @@ export default {
   mounted() {
     this.setWhiteBoard(this.$refs["board"].getContext("2d"));
 
+    //drawbackground
     this.drawBackground();
 
     //setup websocket client
@@ -88,11 +95,16 @@ export default {
 
     //listen to add point from othetr clients
     this.webSoc.on("addPoint", (point) => {
-      console.log("message from " + point["sender"]);
-      this.drawLine({ ...point, secondary: true });
+      this.drawLine({
+        ...point,
+        secondary: true,
+        currentWidth: this.$windowWidth,
+        currentHeight: this.$windowHeight,
+      });
     });
   },
   created() {
+    //add eventlistener to manager resize events
     window.addEventListener("resize", () => {
       try {
         this.drawBackground();
