@@ -19,11 +19,8 @@ export default {
 };
 </script>
 <style>
-.main {
+* {
   padding: 0px !important;
   margin: 0px !important;
-  /* width: 100vw;
-  height: 100vh;
-  background: blueviolet; */
 }
 </style>

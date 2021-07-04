@@ -6,11 +6,8 @@
       @mousedown="startDraw"
       @mouseup="endDraw"
       @mouseleave="endDraw"
-      height="800"
-      width="800"
     >
     </canvas>
-    <button @click="clear">clear</button>
   </div>
 </template>
 
@@ -74,10 +71,17 @@ export default {
       "addPath",
       "setSocketConnection",
     ]),
+    drawBackground() {
+      this.$refs["board"].width = this.$windowWidth;
+      this.$refs["board"].height = this.$windowHeight;
+
+      cHelper.setBackground(this.canvas);
+    },
   },
   mounted() {
     this.setWhiteBoard(this.$refs["board"].getContext("2d"));
-    cHelper.setBackground(this.canvas);
+
+    this.drawBackground();
 
     //setup websocket client
     this.setSocketConnection(SocketIO("http://192.168.0.167:8080"));
@@ -88,12 +92,17 @@ export default {
       this.drawLine({ ...point, secondary: true });
     });
   },
+  created() {
+    window.addEventListener("resize", () => {
+      try {
+        this.drawBackground();
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
 };
 </script>
 
 <style scoped>
-canvas {
-  border: 1px solid rgb(9, 9, 14);
-  display: block;
-}
 </style>
