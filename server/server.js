@@ -21,10 +21,15 @@ io.on('connection', (socket) => {
 
     //new point is added
     socket.on('addPoint', (message) =>     {
-        console.log(message);
-        message['sender'] = socket.id
+        console.log('addPoint',message);
         socket.broadcast.emit('addPoint', message );   
     });
+
+    //clear background
+    socket.on('clear',(message) => {
+        console.log('clear',message)
+        socket.broadcast.emit('clear', message );   
+    } )
 });
 
 //Set environment variables

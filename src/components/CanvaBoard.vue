@@ -23,7 +23,8 @@
       <Button
         icon="pi pi-pencil"
         class="flex-item p-button-raised p-button-rounded p-button-lg"
-      />
+        ><ColorPicker v-model="color" format="hex" />
+      </Button>
       <Button
         icon="pi pi-share-alt"
         class="flex-item p-button-raised p-button-rounded p-button-lg"
@@ -31,6 +32,7 @@
       <Button
         icon="pi pi-github"
         class="flex-item p-button-raised p-button-rounded p-button-lg"
+        @click="openGit()"
       />
     </div>
   </div>
@@ -41,10 +43,17 @@ import { mapState, mapActions } from "vuex";
 import SocketIO from "socket.io-client";
 import * as cHelper from "../services/canvasHelper";
 import Button from "primevue/button";
+import ColorPicker from "primevue/colorpicker";
 
 export default {
+  data() {
+    return {
+      color: "f24b8e",
+    };
+  },
   components: {
     Button,
+    ColorPicker,
   },
   computed: {
     ...mapState([
@@ -79,7 +88,7 @@ export default {
           x2: e.offsetX,
           y2: e.offsetY,
           secondary: false,
-          brushColor: this.brushColor,
+          brushColor: "#".concat(this.color),
           storkeSize: this.storkeSize,
         });
         this.setX(e.offsetX);
@@ -94,9 +103,12 @@ export default {
     endDraw() {
       this.setDrawState(false);
     },
-    clear() {
+    clear(notify = true) {
       cHelper.clearBackground(this.canvas);
       cHelper.setBackground(this.canvas);
+      if (notify) {
+        this.webSoc.emit("clear", {});
+      }
     },
     ...mapActions([
       "setWhiteBoard",
@@ -111,6 +123,9 @@ export default {
       this.$refs["board"].height = this.$windowHeight;
 
       cHelper.setBackground(this.canvas);
+    },
+    openGit() {
+      window.open("https://github.com/nishanb/Multi-Board");
     },
   },
   mounted() {
@@ -136,10 +151,19 @@ export default {
       });
     });
 
+    //clear background
+    this.webSoc.on("clear", () => {
+      this.clear(false);
+    });
+
+    //window events
+
     //add eventlistener to manage window resize events
     window.addEventListener("resize", () => {
       try {
+        window.location.reload();
         this.drawBackground();
+        //TODO : Restore whiteboard with diffrent screen resulution
       } catch (error) {
         console.log(error);
       }
