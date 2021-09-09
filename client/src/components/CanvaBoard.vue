@@ -137,7 +137,7 @@ export default {
   },
   created() {
     //setup websocket client
-    this.setSocketConnection(SocketIO("http://192.168.0.167:8080"));
+    this.setSocketConnection(SocketIO("/"));
 
     //websocket events
 
