@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client
+  namespace: multi-board
+  labels:
+    app: client
+spec:
+  selector:
+    matchLabels:
+      app: client
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+      - name: client
+        image: nishanb/multiboard-client
+        ports:
+        - containerPort: 8080
+          name: http
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Always

@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: multi-board-ingress
+  namespace: multi-board
+  annotations:
+    kubernetes.io/ingress.class: 'nginx'
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /?(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: client
+            port:
+              number: 8080
+      - path: /api/?(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: server
+            port:
+              number: 3000
+
+      - path: /sockjs-node/
+        pathType: Prefix
+        backend:
+          service:
+            name: client
+            port:
+              number: 8080
+      - path: /socket.io/
+        pathType: Prefix
+        backend:
+          service:
+            name: server
+            port:
+              number: 3000

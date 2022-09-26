@@ -23,7 +23,8 @@
       <Button
         icon="pi pi-pencil"
         class="flex-item p-button-raised p-button-rounded p-button-lg"
-        ><ColorPicker v-model="color" format="hex" />
+      >
+        <ColorPicker v-model="color" format="hex" id="colour-picker" />
       </Button>
       <Button
         icon="pi pi-share-alt"
@@ -191,5 +192,8 @@ export default {
 }
 .container {
   position: relative;
+}
+#colour-picker {
+  zoom: 1.2 !important;
 }
 </style>
