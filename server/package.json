@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "express-sanitizer": "^1.0.6",
     "morgan": "^1.10.0",
-    "socket.io": "^4.1.2",
+    "socket.io": "^4.5.3",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
